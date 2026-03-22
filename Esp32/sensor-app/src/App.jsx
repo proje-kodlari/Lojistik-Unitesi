@@ -112,10 +112,10 @@ function App() {
     return () => clearInterval(interval);
   }, [data.h, heaterStartTime]);
 
-  const fetchHistory = async () => { try { const res = await axios.get('http://127.0.0.1:3001/api/history'); setHistoryData(res.data); } catch(e){} };
-  const fetchInventory = async () => { try { const res = await axios.get('http://127.0.0.1:3001/api/inventory/list'); setInventoryList(res.data); } catch(e){} };
-  const addToInventory = async (uid) => { const itemName = TAG_DATABASE[uid] || `Bilinmeyen Ürün (${uid})`; try { await axios.post('http://127.0.0.1:3001/api/inventory/add', {uid, itemName}); fetchInventory(); } catch(e){} };
-  const deleteItem = async (id) => { if(window.confirm("Silinsin mi?")){ await axios.delete(`http://127.0.0.1:3001/api/inventory/delete/${id}`); fetchInventory();} };
+  const fetchHistory = async () => { try { const res = await axios.get(`${API_BASE_URL}/api/history`); setHistoryData(res.data); } catch(e){} };
+  const fetchInventory = async () => { try { const res = await axios.get(`${API_BASE_URL}/api/inventory/list`); setInventoryList(res.data); } catch(e){} };
+  const addToInventory = async (uid) => { const itemName = TAG_DATABASE[uid] || `Bilinmeyen Ürün (${uid})`; try { await axios.post(`${API_BASE_URL}/api/inventory/add`, {uid, itemName}); fetchInventory(); } catch(e){} };
+  const deleteItem = async (id) => { if(window.confirm("Silinsin mi?")){ await axios.delete(`${API_BASE_URL}/api/inventory/delete/${id}`); fetchInventory();} };
 
   useEffect(() => { if (activeTab === 'history') fetchHistory(); if (activeTab === 'inventory') fetchInventory(); }, [activeTab]);
 
